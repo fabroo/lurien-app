@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "no",
+    "githubUrl": "https://github.com/Fabro0/lurien-app"
   }
 }
