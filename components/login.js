@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useContext } from 'react';
 import { FancyAlert } from 'react-native-expo-fancy-alerts';
-
+import Navbar from './navbar'
 
 import {
   StyleSheet,
@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
   const { width } = Dimensions.get("window")
   const [dni, setDni] = useState("");
   const [psw, setPsw] = useState("");
-  const [visibleError, setVisibleError] = useState("");
+  const [visibleError, setVisibleError] = useState(false);
 
   const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles1.appButtonContainer}>
@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
       setTimeout(() => {
         setVisibleError(false)
 
-      }, 2000);
+      }, 1000);
     }
     else {
       fetch(`http://192.168.1.126:8080/api/user/login`, {
@@ -51,8 +51,10 @@ export default function Login({ navigation }) {
             res.json().then(data => {
               let { dni, username, pfp, qrLink, companyID } = data.user
               let user = { dni, username, pfp, qrLink, companyID };
-              // console.log("USER",user)
-              navigation.navigate('setting', { user })
+
+              global.user = user;
+
+              navigation.navigate('bottom', { user })
 
             })
           }
@@ -61,7 +63,7 @@ export default function Login({ navigation }) {
             setTimeout(() => {
               setVisibleError(false)
 
-            }, 2000);
+            }, 1000);
           }
         }
         )
@@ -70,18 +72,7 @@ export default function Login({ navigation }) {
     }
   }
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#D3D3D3',
-      alignItems: 'center',
-      flex: 1,
-      justifyContent: 'center'
-    },
-    tinyLogo: {
-      width: 50,
-      height: 50,
-    },
-  });
+  
   const styles1 = StyleSheet.create({
     appButtonContainer: {
       elevation: 8,
@@ -99,7 +90,7 @@ export default function Login({ navigation }) {
       alignSelf: "center",
     },
     texto: {
-      fontSize: 16,
+      fontSize: 12,
       marginTop: 20,
     }
     ,
@@ -111,72 +102,69 @@ export default function Login({ navigation }) {
   });
   return (
     <>
-      <StatusBar hidden />
-      <View style={{ flex: 1, flexDirection: "column" }}>
-
+      <Navbar />
+      <View style={{
+        flex: 1,
+        flexDirection: "row",
+        height: 1
+      }}>
         <View style={{
-          flex: 1,
-          flexDirection: "row",
-          height: 1
+          width: width / 3,
+          height: 70
         }}>
-          <View style={{
-            width: width / 3,
-            height: 70
-          }}>
-          </View>
-          <View style={{
-            width: width / 3,
-            height: 70,
+        </View>
+        <View style={{
+          width: width / 3,
+          height: 70,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        </View>
+        <View style={{
+          width: width / 3,
+          height: 70
+        }}>
+        </View>
+      </View >
+      <View style={{ alignItems: 'center', flex: 3 }}>
+        <Text style={{ fontSize: 35 }}> Login </Text>
+        <TextInput
+          key="dni"
+          name="dni"
+          keyboardType="numeric"
+
+          style={{ width: width / 1.3, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginTop: 30 }}
+          placeholder="DNI:"
+          onChangeText={dni => setDni(dni)}
+          defaultValue={dni} />
+        <TextInput
+          key="password"
+          name="password"
+          secureTextEntry={true}
+          style={{ width: width / 1.3, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginTop: 20, marginBottom: 40 }}
+          placeholder="Password"
+          onChangeText={password => setPsw(password)}
+          defaultValue={psw} />
+
+        <AppButton onPress={login} title="Enter" />
+        <Text style={styles1.texto}>O crear cuenta, <Text style={styles1.textoBold} onPress={() => navigation.navigate('register')}>Aquí</Text></Text>
+        <FancyAlert
+          visible={visibleError}
+          icon={<View style={{
+            flex: 1,
+            display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
-          </View>
-          <View style={{
-            width: width / 3,
-            height: 70
-          }}>
-          </View>
-        </View >
-        <View style={{ alignItems: 'center', flex: 3 }}>
-          <Text style={{ fontSize: 35 }}> Login </Text>
-          <TextInput
-            key="dni"
-            name="dni"
-            keyboardType="numeric"
-
-            style={{ width: width / 1.3, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginTop: 30 }}
-            placeholder="DNI:"
-            onChangeText={dni => setDni(dni)}
-            defaultValue={dni} />
-          <TextInput
-            key="password"
-            name="password"
-            secureTextEntry={true}
-            style={{ width: width / 1.3, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginTop: 20, marginBottom: 40 }}
-            placeholder="Password"
-            onChangeText={password => setPsw(password)}
-            defaultValue={psw} />
-
-          <AppButton onPress={login} title="Enter" />
-          <Text style={styles1.texto}>O crear cuenta, <Text style={styles1.textoBold} onPress={() => navigation.navigate('register')}>Aquí</Text></Text>
-          <FancyAlert
-            visible={visibleError}
-            icon={<View style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#d1443f',
-              borderRadius: 50,
-              width: '100%',
-            }}><Text style={{ color: 'white' }}>:(</Text></View>}
-            style={{ backgroundColor: 'white' }}
-          >
-            <Text style={{ marginTop: -16, marginBottom: 32, fontSize: 20 }}>Chequea tus datos!</Text>
-          </FancyAlert>
-        </View>
-
+            backgroundColor: '#d1443f',
+            borderRadius: 50,
+            width: '100%',
+          }}><Text style={{ color: 'white' ,fontSize:26}}>:(</Text></View>}
+          style={{ backgroundColor: 'white' }}
+        >
+          <Text style={{ marginTop: -16, marginBottom: 32, fontSize: 20 }}>Chequea tus datos!</Text>
+        </FancyAlert>
       </View>
+
     </>
   );
 }

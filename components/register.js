@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useContext } from 'react';
 import { FancyAlert } from 'react-native-expo-fancy-alerts';
-
+import Navbar from './navbar'
 
 import {
     StyleSheet,
@@ -35,7 +35,7 @@ export default function Register({ navigation }) {
             setTimeout(() => {
                 setVisibleError(false)
 
-            }, 2000);
+            }, 1000);
         }
         else {
             fetch(`http://192.168.1.126:8080/api/user/register`, {
@@ -68,7 +68,7 @@ export default function Register({ navigation }) {
                         setTimeout(() => {
                             setVisibleError(false)
 
-                        }, 2000);
+                        }, 1000);
                     }
 
 
@@ -98,7 +98,7 @@ export default function Register({ navigation }) {
             alignSelf: "center",
         },
         texto: {
-            fontSize: 16,
+            fontSize: 12,
             marginTop: 20,
         }
         ,
@@ -110,7 +110,7 @@ export default function Register({ navigation }) {
     });
     return (
         <>
-            <StatusBar hidden />
+            <Navbar/>
             <View style={{ flex: 1, flexDirection: "column" }}>
 
                 <View style={{
@@ -136,7 +136,7 @@ export default function Register({ navigation }) {
                     }}>
                     </View>
                 </View >
-                <View style={{ alignItems: 'center', flex: 3 }}>
+                <View style={{ alignItems: 'center', flex: 6 }}>
                     <Text style={{ fontSize: 35 }}> Register </Text>
                     <TextInput
                         key="username"
@@ -184,7 +184,7 @@ export default function Register({ navigation }) {
                         borderRadius: 50,
                         width: '100%',
                     }}><Text style={{ color: 'white' }}>:)</Text></View>}
-                    style={{ backgroundColor: 'white' }}
+                    style={{ backgroundColor: 'white',fontSize:26 }}
                 >
                     <Text style={{ marginTop: -16, marginBottom: 32, fontSize: 20 }}>Creada!, fijate  mail!</Text>
                 </FancyAlert>
@@ -199,7 +199,7 @@ export default function Register({ navigation }) {
                         borderRadius: 50,
                         width: '100%',
                     }}><Text style={{ color: 'white' }}>:(</Text></View>}
-                    style={{ backgroundColor: 'white' }}
+                    style={{ backgroundColor: 'white' ,fontSize:26}}
                 >
                     <Text style={{ marginTop: -16, marginBottom: 32, fontSize: 20 }}>Chequea tus datos!</Text>
                 </FancyAlert>

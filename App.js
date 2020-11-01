@@ -1,6 +1,7 @@
 import Login from './components/login'
 import Settings from './components/settings'
 import Register from './components/register'
+import Bottom from './components/bottom'
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,6 +10,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <>
     <NavigationContainer>
       <Stack.Navigator>
 
@@ -23,26 +25,36 @@ export default function App() {
         />
 
         <Stack.Screen
-           options={
+          options={
             {
-              headerShown:false
+              headerShown: false
             }
           }
           name="setting"
           component={Settings}
         />
         <Stack.Screen
-           options={
+          options={
             {
-              headerShown:false
+              headerShown: false
             }
           }
           name="register"
           component={Register}
         />
+        <Stack.Screen
+          options={
+            {
+              headerShown: false
+            }
+          }
+          name="bottom"
+          component={Bottom}
+        />
 
 
       </Stack.Navigator>
     </NavigationContainer>
+  </>
   );
 };
