@@ -35,7 +35,7 @@ export default function Login({ navigation }) {
       }, 1000);
     }
     else {
-      fetch(`http://192.168.1.126:8080/api/user/login`, {
+      fetch(`https://backend.lurien.team/api/user/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

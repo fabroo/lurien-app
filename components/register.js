@@ -38,7 +38,7 @@ export default function Register({ navigation }) {
             }, 1000);
         }
         else {
-            fetch(`http://192.168.1.126:8080/api/user/register`, {
+            fetch(`https://backend.lurien.team/api/user/register`, {
                 method: 'PUT',
                 headers: {
                     Accept: 'application/json',
