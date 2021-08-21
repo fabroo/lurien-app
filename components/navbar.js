@@ -13,19 +13,18 @@ export default function Navbar({ navigation }) {
 
   return (
     <>
-      <StatusBar hidden />
+      <StatusBar hidden={true} />
         <View style={{
           flexDirection: "row",
-          height: "auto"
+          height: "auto",
+          paddingTop:25
         }}>
           <View style={{
-            backgroundColor: "#D3D3D3",
             width: width / 3,
             height: 70
           }}>
           </View>
           <View style={{
-            backgroundColor: "#D3D3D3",
             width: width / 3,
             height: 70,
             justifyContent: 'center',
@@ -34,7 +33,6 @@ export default function Navbar({ navigation }) {
             <Image source={Logo} style={{ width: 55, height: 55 }} />
           </View>
           <View style={{
-            backgroundColor: "#D3D3D3",
             width: width / 3,
             height: 70
           }}>
